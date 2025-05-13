@@ -23,23 +23,28 @@ These scripts are designed to be:
 
 ---
 
-## 📜 Script List
+## Recommended Script Order
 
-| File | What It Does |
-|------|--------------|
-| `01-stop-update-services.ps1` | Stops Windows Update-related services (wuauserv, bits, cryptsvc, msiserver). |
-| `02-clear-update-cache.ps1` | (Coming Soon) Clears `SoftwareDistribution` and `Catroot2` folders. |
-| `03-reset-winsock.ps1` | (Planned) Resets the Winsock stack to fix networking issues. |
-| `04-flush-dns.ps1` | (Planned) Flushes DNS resolver cache. |
-| `05-reregister-dlls.ps1` | (Planned) Re-registers update-related DLLs (mostly legacy). |
-| `06-start-update-services.ps1` | (Planned) Restarts the services stopped earlier. |
-| `07-run-sfc-dism.ps1` | (Planned) Runs `SFC` and `DISM` scans to check and repair system files. |
-| `08-windows-update-troubleshooter.ps1` | (Planned) Launches the built-in Windows Update troubleshooter. |
-| `09-check-for-updates.ps1` | (Planned) Checks for updates using PowerShell. |
+| # | Script | Purpose |
+|----|--------|---------|
+| 01 | `01-open-system-protection.ps1` | Opens System Protection settings (optional prep for restoring later). |
+| 02 | `02-stop-update-services.ps1` | Stops Windows Update, BITS, CryptSvc, and MSI services. |
+| 03 | `03-clear-update-cache.ps1` | Deletes `SoftwareDistribution` and `Catroot2`. |
+| 04 | `04-cleanup-superseded-components.ps1` | Removes superseded updates using DISM. |
+| 05 | `05-reset-winsock.ps1` | Resets Winsock (fixes corrupt TCP/IP stack). |
+| 06 | `06-flush-dns.ps1` | Flushes DNS cache to fix resolution issues. |
+| 07 | `07-reregister-dlls.ps1` | Re-registers Windows Update-related DLLs. |
+| 08 | `08-start-update-services.ps1` | Starts the services stopped in script 2. |
+| 09 | `09-run-sfc-dism.ps1` | Runs SFC + DISM to repair system files and image health. |
+| 10 | `10-reset-microsoft-store.ps1` | Clears Microsoft Store cache via `wsreset.exe`. |
+| 11 | `11-force-gpupdate.ps1` | Forces group policy refresh (`gpupdate /force`). |
+| 12 | `12-launch-windows-update-troubleshooter.ps1` | Opens Windows Update Troubleshooter GUI. |
+| 13 | `13-check-for-updates.ps1` | Scans (and optionally installs) updates via PowerShell. |
+| 14 | `14-get-product-key.ps1` | Shows the system’s Windows product key (from BIOS/registry). |
 
 ---
 
-## 🧰 Requirements
+## Requirements
 
 - **OS:** Windows 10 / 11
 - **Permissions:** Must be run as Administrator (right-click > Run as Administrator or run from elevated shell).
@@ -47,24 +52,24 @@ These scripts are designed to be:
 
 ---
 
-## ❗ Disclaimer
+## Disclaimer
 
 These scripts are provided *as-is*. They are safer than random tools off the internet, but you're still responsible for using them correctly. If you're working in an enterprise or restricted environment, check your policies before executing.
 
 ---
 
-## 🧠 Why Use These?
+## Why Use These?
 
 Because most "Windows Update Fixer" tools are either:
-- 🔒 Not allowed on locked-down systems
-- 🤡 Sloppily built with poor transparency
-- 🤫 Doing mystery things behind the scenes
+- Not allowed on locked-down systems
+- Sloppily built with poor transparency
+- Doing mystery things behind the scenes
 
 This repo is for those who want full control, transparency, and the ability to script or learn without bullshit.
 
 ---
 
-## 📦 Future Plans
+## Future Plans
 
 - Add an optional logging mechanism
 - Create a wrapper script that chains all steps in sequence
@@ -74,4 +79,4 @@ This repo is for those who want full control, transparency, and the ability to s
 
 ## 🛠️ License
 
-MIT. Do whatever the hell you want, just don’t pretend you wrote it first.
+GNU
